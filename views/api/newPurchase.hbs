@@ -1,0 +1,979 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Cridet Sales Mgt System</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/sidebar.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  {{!--
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script> --}}
+  {{!--
+  <link rel="stylesheet" href="../static/js/fontawesome.js"> --}}
+  <script src="../static/js/solic.js"></script>
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div>
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+        {{!-- Contenst Start --}}
+        <div class="contents">
+          <div class="formtitle">
+            <h2> Purchase </h2>
+          </div>
+          {{!-- ////////////////////////////////////////////////////////////// --}}
+          {{!-- {{#each alerts}}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{msg}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {{/each}} --}}
+          <div class="mainform">
+            {{#recpt_ex_err}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <text> Receipt No already exist</text>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/recpt_ex_err}}
+            {{#each alerts}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{msg}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/each}}
+
+            {{#if dataUpdate}}
+            <div class="alert alert-success">
+              <text>Purchase data updated successfully </text>
+            </div>
+            {{/if}}  <div class="alert alert-success">{{alr}} </div>
+            {{#if alr}}
+            {{/if}}
+            {{!-- {{#dataUpdateError}}
+            <div class="alert alert-warning">
+              Purchase data not updated
+            </div>
+            {{/dataUpdateError}} --}}
+            {{#each alert}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{msg}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/each}}
+            <br>
+            {{#newP}}
+            <form action="/api/loadCompanyData" method="post" style="padding-left:20px; text-align:center;">
+                  <input type="submit" value="New Purchase" style="display:inline-block; width:40%">
+                </form>
+            <div class="grid-button">
+              <div class="grid-item" style="border:1px solid #adadad ;">
+                <form action="/api/loadAllPData" method="post" id="" class="" name="">
+                  <label>To search record enter purchase-id, company name, username or receipt no.</label>
+                  <input type="search" class="form-control" name="skey" placeholder="search" style="display:inline-block; width:100%;"> <br>
+                  <input type="submit" class="btn" placeholder="search" value="Search Record" style="display:inline-block; width:70%; ">
+                </form>
+              </div>
+              <div class="grid-item" style="border:1px solid #adadad ;">
+                <form action="/api/purchaseUpdateSearch" method="post">
+                  <label>To update purchase record enter purchase id or receipt No: </label>
+                  <input type="search" class="form-control" name="pUSearchkey" value="" placeholder="search" style="display:inline-block; width:100%"><br>
+                  <input type="submit" class="btn" name="Seach" placeholder="search" value="Search" style="display:inline-block; width:70%">
+                </form>
+              </div>
+              <div class="grid-item" style="border:1px solid #adadad ;">
+                <form action="/api/searchPurchaseRecordDelete" method="post">
+                  <label>To delete purchase record enter purchase id or receipt No: </label>
+                  <input type="search" class="form-control" name="pDSearchkey" value="" placeholder="search" style="display:inline-block; width:100%"><br>
+                  <input type="submit" class="btn" value="Search " style="display:inline-block; width:70%">
+                </form>
+              </div>
+            </div>
+            {{/newP}}
+
+            {{#if msg}}
+            <div class="formsubtitle ">
+              {{#p_added_ms_er}}
+              <p style="color: darkred; font-weight:600"> not added Succesfully</p>
+              {{/p_added_ms_er}}                      
+              
+
+              <div class="searchform"><h5>Please Select Company and Transaction type: </h5>
+                <div class="forms">
+                  <div class="salesform sf" >
+                    <form action="" method="post" name="" id="company_Form" class="formhead">
+                      {{!-- <input type="submit" value="submit" id="comp_submit" hidden> --}}
+                      <div class="purchase_ddlist">
+                        <label for=""> Company: </label>
+                        <select id="companyID" name="compID" class="companyy" style="width: 220px; margin-left:65px;" required>
+                          <option value="Select Company"> Select Company </option>
+                          {{#company_data}}
+                          <% for (let i=0; i<{{comp_name}}.length; i++) { %>
+                            <option value="{{comp_name}}" name=""> {{comp_name}} </option>
+                            <%}%>
+                              {{/company_data}}
+                        </select>
+                        <input type="text" name="cname" id="cname" value="" hidden>
+
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="salesform">
+                    <form action="/api/loadtypeData" method="post" class="formhead" id="type_form">
+                      <div class="purchase_ddlist">
+                        <label for=""> Transaction Type: </label>
+                        <select name="ttype" id="trans_typeID" class="list" style="width: 220px;" required>
+                          <option value="Select Transaction Type"> Select Transaction Type</option>
+                          {{#tran_data}}
+                          <% for (let i=0; i<{{type_name}}.length; i++) { %>
+                            <option value="{{type_name}}"> {{type_name}} </option>
+                            <%}%>
+                              {{/tran_data}}
+                              <br>
+                        </select>
+                        <input type="text" name="tname" id="tname" value="" hidden>
+
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            {{!-- mian form data --}}
+            <div class="addemployee">
+              <form action="/api/addPurchase" method="post" class="" id="addEmployee">
+                <table style="width:100%; ">
+                  <tr>
+                    <th style="width:30%;"> </th>
+                    <th> </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase Amount: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="purchase amount" name="p_amount" autofocus>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Payment: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="currently paid" name="p_payment">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase Commission %: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="commission in percentage" name="p_com">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Reciept Number: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="receipt number" name="reciept_no">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Remarks: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="remarks" name="remarks">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span></span></td>
+                    <td><span></span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="">
+                      <input type="reset" class="btn btn-secondary" value="Reset" id="resetEmpForm">
+                      <input type="submit" class="btn btn-secondary" value="Next" id="submitEmpForm">
+                      <span></span>
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
+              <span></span>
+            </div>
+            {{/if}}
+          </div>
+          {{!-- /////////////////////////////////////////////////////////////////////////////////////////// --}}
+          {{!-- //////////////////////////////////////////////////////////////////////////////////////////// --}}
+          <div class="mainform 2">
+
+            {{!-- Update Form Dataload /api/purchaseUpdateSearch --}}
+            <div class="err_msg">
+              {{#each alerts}}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{msg}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              {{/each}}
+              {{#errmsg_pu}}
+              <div class="alert alert-danger">
+                <text>Purchase Record not found</text>
+              </div>
+              {{/errmsg_pu}}
+
+            </div>
+            {{#pUdata}}
+            <h2>Update Purchase Record</h2>
+            <div class="form1 /api/purchaseUpdateSearch">
+              <div class="searchform">
+                <div class="forms">
+                  <div class="salesform sf">
+                    <form action="" method="post" name="" id="company_Form" class="formhead">
+                      {{!-- <input type="submit" value="submit" id="comp_submit" hidden> --}}
+                      <div class="purchase_ddlist">
+                        <label for=""> Select Company: </label>
+                        <select id="" name="" class="" required>
+                          {{#if hid}}<option value="Select Company"> </option>{{/if}}
+                          <% for (let i=0; i<{{comp_name}}.length; i++) { %>
+                            <option value="{{comp_name}}" name=""> {{comp_name}} </option>
+                            <%}%>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+
+                  <div class="salesform">
+                    <form action="" method="post" class="formhead" id="type_form">
+                      <div class="purchase_ddlist">
+                        <label for=""> Transaction Type: </label>
+                        <select name="" id="" class="" required>
+                          {{#if hid}}<option value="Select Transaction Type"></option>{{/if}}
+                          <% for (let i=0; i<{{type_name}}.length; i++) { %>
+                            <option value="{{type_name}}"> {{type_name}} </option>
+                            <%}%>
+                              <br>
+                        </select>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              <div class="searchform">
+                <form action="/api/loadCompanyDataUPdate" method="post" class="" id="addEmployee">
+                  <table style="width:100%; ">
+                    <tr>
+                      <th style="width:30%;"> </th>
+                      <th> </th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> Purchase ID: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="purchase amount" name="p_id" value="{{p_id}}" readonly>
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> Purchase Amount: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="purchase amount" name="p_amount" value="{{p_amount}}"
+                            readonly>
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> Payment: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="currently paid" name="p_payment" value="{{p_payment}}"
+                            readonly>
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> Purchase Commission %: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="commission in percentage" name="p_com" value="{{p_com}}"
+                            readonly>
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> Reciept Number: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="receipt number" name="reciept_no" value="{{p_reciept_no}}"
+                            readonly>
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> Remarks: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="remarks" name="remarks" value="{{remarks}}" readonly>
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td><span></span></td>
+                      <td><span></span></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="">
+                        <button type="submit" class="btn btn-secondary" value="Reset" id="resetEmpForm"> Edit </button>
+                        {{!-- <input type="" class="btn btn-secondary" value="Update" id="submitEmpForm"> --}}
+                        <span></span>
+                      </td>
+                    </tr>
+
+                  </table>
+                </form>
+                <span></span>
+              </div>
+
+            </div>{{/pUdata}}
+
+
+          </div>
+          {{!-- /////////////////////////////////////////////////////////////////////////////////////////// --}}
+          {{!-- //////////////////////////////////////////////////////////////////////////////////////////// --}}
+          {{!-- Data Editalbe form --}}
+          <div class="mainform 3">
+            {{#if compNtrans}}
+            <div class="searchform">
+              <div class="forms">
+                <div class="salesform sf">
+                  <form action="" method="post" name="" id="company_Form" class="formhead">
+                    {{!-- <input type="submit" value="submit" id="comp_submit" hidden> --}}
+                    <div class="purchase_ddlist">
+                      <label for=""> Select Company: </label>
+                      <select id="sCompany" name="sCompany" class="form-group mb-2" style="width: 220px; padding: 4px 0;" required>
+                        <option value="Select Company"> select compnay </option>
+                        {{#cData_update}}
+                        <% for (let i=0; i<{{comp_name}}.length; i++) { %>
+                          <option value="{{comp_name}}" name="sCompanyD"> {{comp_name}} </option>
+                          <%}%>
+                            {{/cData_update}}
+                      </select>
+                      <input type="text" name="cname" id="cname" value="" hidden>
+
+                    </div>
+                  </form>
+                </div>
+
+                <div class="salesform">
+                  <form action="" method="post" class="formhead" id="type_form">
+                    <div class="purchase_ddlist">
+                      <label for=""> Transaction Type: </label>
+                      <select name="sTrans" id="sTrans" class="form-group mb-2" style="width: 220px; padding: 4px 0;" required>
+                        <option value="Select Transaction Type">select transaction</option>
+                        {{#tData_update}}
+                        <% for (let i=0; i<{{type_name}}.length; i++) { %>
+                          <option value="{{type_name}}"> {{type_name}} </option>
+                          <%}%>
+                            {{/tData_update}}
+                            <br>
+                      </select>
+                      <input type="text" name="tname" id="tname" value="" hidden>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            {{/if}}
+            {{#toupdate}}
+            <div class="searchform">
+              <form action="/api/companyDataUPdate" method="post" class="" id="addEmployee">
+                <table style="width:100%; ">
+                  <tr>
+                    <th style="width:30%;"> </th>
+                    <th> </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase ID: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="purchase amount" name="p_id" value="{{p_id}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase Amount: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="purchase amount" name="p_amount" value="{{p_amount}}">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Payment: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="currently paid" name="p_payment" value="{{p_payment}}">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase Commission %: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="commission in percentage" name="p_com" value="{{p_com}}">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Reciept Number: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="receipt number" name="reciept_no" value="{{p_reciept_no}}">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Remarks: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="remarks" name="remarks" value="{{remarks}}">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span></span></td>
+                    <td><span></span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="" style="text-align:right;">
+                      {{!-- <button type="submit" class="btn btn-secondary" value="Update" id="resetEmpForm"> Edit
+                      </button> --}}
+                      <div style="margin-right:50px ;">
+                        <input type="submit" class="btn btn-secondary" value="Update" id="">
+                      </div>
+                      <span></span>
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
+              <span></span>
+            </div>
+            {{/toupdate}}
+          </div>
+
+          {{!-- //////////////////////////////////////////////////////////////////////////////////////////// --}}
+          {{!-- /////////////////////////////////////////////////////////////////////////////////////////// --}}
+          {{!-- Deleting Reord Form --}}
+          <div class="mainform 4">
+            {{#dataDmsg}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <text>Data not found! try again with valid purchase ID or receipt No: </text>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/dataDmsg}}
+
+            {{#pDelmsg}}
+            <div class="alert alert-success">
+              <text>data deleted successfully</text>
+            </div>
+            {{/pDelmsg}}
+
+            {{#dataD}}
+            <div class="searchform">
+              <form action="/api/deletePurchaseRecord" method="post" class="" id="">
+                <table style="width:100%; ">
+                  <tr>
+                    <th style="width:30%;"> </th>
+                    <th> </th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase ID: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="purchase amount" name="p_id" value="{{p_id}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Company Name: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="purchase amount" name="" value="{{comp_name}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Transaction Type: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="purchase amount" name="" value="{{type_name}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase Amount: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="purchase amount" name="" value="{{p_amount}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Payment: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="currently paid" name="" value="{{p_payment}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Purchase Commission %: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="commission in percentage" name="" value="{{p_com}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Reciept Number: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="receipt number" name="" value="{{p_reciept_no}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Remarks: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="remarks" name="" value="{{remarks}}" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td><span></span></td>
+                    <td><span></span></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="" style="text-align:right;">
+                      {{!-- <button type="submit" class="btn btn-secondary" value="Update" id="resetEmpForm"> Edit
+                      </button> --}}
+                      <div style="margin-right:50px ;">
+                        <input type="submit" class="btn btn-secondary" value="Delete" id="">
+                      </div>
+                      <span></span>
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
+              <span></span>
+            </div>
+            {{/dataD}}
+          </div>
+          {{!-- /////////////////////////////////////////////////////////////////////////////////////////// --}}
+          {{!-- /////////////////////////////////////////////////////////////////////////////////////////// --}}
+          <div class="mainform 5">
+            {{#allPDataMsg}}
+            <div class="alert alert-danger">
+              <text>Data not found </text>
+            </div>
+            {{/allPDataMsg}}
+            <div class="viewcontents">
+              <form>
+                <table class="table table-striped table-hover" id="expData">
+                  {{#allPDataMst2}}
+                  <thead>
+                    <tr>
+                      <th scope="col">Purchase ID </th>
+                      <th scope="col">Receipt No </th>
+                      <th scope="col">Company Name</th>
+                      <th scope="col">Transaction Type</th>
+                      <th scope="col">Amount</th>
+                      <th scope="col">Paid Amount</th>
+                      <th scope="col">Commision %</th>
+                      <th scope="col">Remarks</th>
+                      
+                    </tr>
+                  </thead>{{/allPDataMst2}}
+                  <tbody>
+                    {{#allPData}}
+                    <tr>
+                      <td>{{p_id}}</td>
+                      <td>{{p_reciept_no}}</td>
+                      <td>{{comp_name}}</td>
+                      <td>{{type_name}}</td>
+                      <td>{{p_amount}}</td>
+                      <td>{{p_payment}}</td>
+                      <td>{{p_com}}</td>
+                      <td>{{remarks}}</td>
+
+                    </tr>
+                    {{/allPData}}
+                  </tbody>
+                </table>
+              </form>
+            </div>
+          </div>
+        </div>{{!-- Contents End --}}
+      </div> {{!-- rithty ends --}}
+      {{!-- no data should be here unless we don't want it on right side of page--}}
+    </div>
+
+
+
+  </div>
+  {{!-- end///////////////////////////////////////////////////////// --}}
+  {{#if msg2}}
+  <p> data found</p> 
+  {{#dataComp}}
+  <input type="text" name="type_id" value="{{comp_id}}" {{/dataComp}} {{#datatrans}} <input type="text" name="type_id"
+    value="{{type_id}}" {{/datatrans}} {{/if}} </div>
+  {{>footer}}
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <!-- Optional JavaScript; choose one of the two! -->
+  {{!--
+  <script src="jquery-3.3.1.slim.min.js"></script> --}}
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js"
+    integrity="sha512-bztGAvCE/3+a1Oh0gUro7BHukf6v7zpzrAb3ReWAVrt+bVNNphcl2tDTKCBr5zk7iEDmQ2Bv401fX3jeVXGIcA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {{!--
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.js"
+    integrity="sha512-4WpSQe8XU6Djt8IPJMGD9Xx9KuYsVCEeitZfMhPi8xdYlVA5hzRitm0Nt1g2AZFS136s29Nq4E4NVvouVAVrBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+    integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  {{!--
+  <script src="../static/js/jquery-3.3.1.slim.min.js"></script> --}}
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+
+
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
+
+
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>   
+  <script>
+       $(document).ready(function () {
+       $('#expData').DataTable( 
+	    {             
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+	        dom: 'Blfrtip',
+            buttons: [      
+                {
+                    extend: 'excelHtml5',
+                    title: 'Purchases',
+                    text:'Export to Excel' 
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Purchases',
+                    className: 'btn_pdf',
+                    text: 'Export to PDF' 
+                },
+	       ]	        
+	    });
+    
+      
+    });
+      document.getElementById("companyID").onchange = function () { pfunction() };
+      function pfunction() {
+        let x = document.getElementById("companyID").value;
+        //document.getElementById("cname").value = x;
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/loadCompData',
+          dataType: 'html',
+          data: {
+            c_name: x,
+            // surname: $("#profile_surname").val(),
+          },
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+
+      document.getElementById("trans_typeID").onchange = function () { tfunction() };
+      function tfunction() {
+        let y = document.getElementById("trans_typeID").value;
+        //document.getElementById("tname").value = y;
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/loadTTypeData',
+          dataType: 'html',
+          data: {
+            t_type: y,
+            // surname: $("#profile_surname").val(),
+          },
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+    
+     
+    /*
+                        $(function() { //shorthand document.ready function
+                            $('#company_Form').on('submit', function(e) { //use on if jQuery 1.7+
+                                // e.preventDefault();  //prevent form from submitting
+                                console.log("data"); //use the console for debugging, F12 in Chrome, not alerts
+                            });
+                        });*/
+
+  </script>
+  <script type="text/javascript">
+    
+      document.getElementById("sCompany").onchange = function () { lfunction() };
+      function lfunction() {
+        alert('hiiiiiiii')
+        let m = document.getElementById("sCompany").value;
+        //document.getElementById("cname").value = x;
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/nameCompData',
+          dataType: 'html',
+          data: {
+            namecomp: m,
+            // surname: $("#profile_surname").val(),
+          },
+          success: function (result2) {
+            console.log(result2);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+      document.getElementById("sTrans").onchange = function () { qfunction() };
+      function qfunction() {
+        alert('ohhhhhhhhhhhh')
+        let n = document.getElementById("sTrans").value;
+        //document.getElementById("tname").value = y;
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/typeTransData',
+          dataType: 'html',
+          data: {
+            typetrans: n,
+            // surname: $("#profile_surname").val(),
+          },
+          success: function (result2) {
+            console.log(result2);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+
+  </script>
+</body>
+
+</html>

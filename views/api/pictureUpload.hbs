@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Cridet Sales Mgt System</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/sidebar.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  {{!--
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script> --}}
+  {{!--
+  <link rel="stylesheet" href="../static/js/fontawesome.js"> --}}
+  <script src="../static/js/solic.js"></script>
+
+
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div>
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+        {{!-- Contenst Start --}}
+
+        <div class="contents">
+          <div class="formtitle">
+            <h2> Picutures Upload </h2>
+          </div>
+          {{#each alerts}}
+                	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    	{{msg}}
+                    	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  	</div>  
+             	{{/each}}
+          {{#if msg}} 
+          <div class="alert alert-success">
+            <p>Purchase data added</p>
+          </div>
+          {{/if}}
+          {{#if msg_pic}} 
+          <div class="alert alert-success">
+            <p> Invoice Picture Uplaoded Succesfully</p>
+            <a href="pictureUpload" style="padding:10px 20px; background-color:burlywood">Upload another picture </a> <span></span>
+            <a href="newPurchase" style="padding:10px 20px; background-color:cadetblue">Start new purchase </a>
+          </div>
+          {{/if}}
+
+          <div class="mainform">
+            <form action="/api/saleData" method="post" class="" id="saleDataForm">
+                {{!-- <input type="submit" id="saleDataShow" onload="myfunc()" hidden> --}}
+                <table class="table table-hover table-success">
+                  <thead>
+                    <tr>
+                      <th scope="col">Purchase ID </th>
+                      <th scope="col">Comopany ID </th>
+                      <th scope="col">Transaction Type ID </th>
+                      <th scope="col">Purchase Amount</th>
+                      <th scope="col">Payment</th>
+                      <th scope="col">Purchase Receipt No</th>
+                       <th scope="col">Purchase Commission</th>                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#saleData}}
+                    <tr>
+                      <input type="text" name="p_id" value="{{p_id}}" hidden>
+                      <input type="text" name="comp_id" value="{{comp_id}}" hidden>
+                      <input type="text" name="p_reciept_no" value="{{p_reciept_no}}" hidden>
+                      
+                      <td>{{p_id}}</td>
+                      <td>{{comp_id}}</td>
+                      <td>{{trans_type_id}}</td>
+                      <td>{{p_amount}}</td>
+                      <td>{{p_payment}}</td>
+                      <td>{{p_reciept_no}}</td>
+                      <td>{{p_com}}</td>
+                    </tr>
+                    {{/saleData}}
+                  </tbody>
+                </table>
+              </form>
+            {{#if formpic}}
+            <div class="" >
+              <br>
+              <br>
+              <div>
+                <h4>Select Invoice Pictures to upload</h3>
+              </div>
+              <div style="text-align:center">
+                <form action="/api/upload_Pic" method="post" id="pUpload" enctype="multipart/form-data">
+                <input type="file" name="invoice_img" value="choose files" id="iPic"> <br> <br>   
+                <input type="date" name="invoice_pic_date" id="iDate"> <br> <br>
+                <textarea name="pic_remarks" placeholder="remarks" rows="3" cols="30" id="iRemarks"></textarea><br> <br>
+                <input type="submit" value="Submit" id="submitPic">
+                      <span id = ""></span>
+              </form>
+              </div>
+              <br>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+        {{!-- Contents End --}}
+      </div>
+    </div>
+  </div>
+  {{>footer}}
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script src="jquery-3.3.1.slim.min.js"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="../static/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
+
+{{!-- / submitPic 
+              <form id="pUpload" enctype="multipart/form-data">
+                <input type="file" name="invoice_img" id="iPic" value="choose files"> <br> <br>   
+                <input type="date" name="invoice_pic_date" id="iDate"> <br> <br>
+                <textarea name="pic_remarks" id="iRemarks"  placeholder="remarks" rows="3" cols="30"></textarea><br> <br>
+                <input type="submit" value="Submit" id="submitPic">
+                      <span id = "status"></span>
+              </form>
+--}}
+  <script>
+    $(document).ready(function () {     
+ 
+      $('#pUpload').submit(function() {
+        $("#status").empty().text("File is uploading...");
+        $(this).ajaxSubmit({
+
+            error: function(xhr) {
+        status('Error: ' + xhr.status);
+            },
+            success: function(response) {
+        $("#status").empty().text(response);
+                console.log(response);
+            }
+    });
+        //Very important line, it disable the page refresh.
+    //return false;
+    });    
+ 
+ /*
+      document.getElementById("submitPic").onclick = function () { picfunction() };
+
+      function picfunction() {
+        let iPic = document.getElementById("iPic").value;
+        let iDate = document.getElementById("iDate").value;
+        let iRemarks = document.getElementById("iRemarks").value;
+        $.ajax({
+          global: false,
+          method: 'POST',
+          url: '/api/upload_Pic',
+          dataType: 'html',
+          data: {
+            invoice_img: iPic,
+            invoice_pic_date: iDate,
+            pic_remarks: iRemarks,
+            //cname: x,
+            // surname: $("#profile_surname").val(), 
+          },
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          } return false;
+          //document.getElementById("pUpload").ajaxSubmit(); 
+        });
+      }
+       */
+       });
+
+  
+  </script>
+
+</body>
+
+</html>

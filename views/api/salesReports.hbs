@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  {{!--
+  <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Credit Sales Mgt System</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/sidebar.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  <link rel="stylesheet" href="../static/js/fontawesome.js">
+  <script src="../static/js/solic.js"></script>
+
+
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div>
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+
+        <div class="" style="text-align:center; background-color:white;">
+          <h1>Sales Reports</h1>
+          <form action="/api/salesReports" id="salesReport" method="post">
+            <input type="submit" class='btn btn-secondary' value="show all data" id="salesReportSubmit"
+              style="padding:5px 12% ;">
+          </form><br>
+        </div> 
+        
+          <div class="alerts">
+            {{#errmsg}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <text>No such Data Found. Try again with different keyword</text>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/errmsg}}
+          </div>
+           {{!-- <div style="font-style:italic ;">
+           <div class="flex-cont">
+              <br>
+              <div class="btn-form flex-i">
+                <form action="/api/searchReports" id="salesReport" method="post">
+                  To filter or search sales report please enter sale ID, customer name, company name, or Transaction
+                  type. <br>
+                  <input type="search" class="" name="searchKey" placeholder="search">
+                  <input type="submit" class='' value="Search" id="salesReportSubmit">
+                </form>
+              </div>
+              <div class="btn-form flex-i">
+              <div class="btn-form">
+                <form action="/api/" id="salesReport" method="post">
+                  To update a Sale please please enter "sale-id". To find Sale-id first search the sales report. <br>
+                  <input type="search" class="" name="searchKey" placeholder="search">
+                  <input type="submit" class='' value="Search" id="salesReportSubmit">
+                </form>
+              </div>
+            </div>
+            </div> 
+            
+          </div>--}}
+
+          {{!-- <div class="btn-form">
+            <form action="/api/updateSaleSearch" id="salesReport" method="post">
+              <input type="search" class="" name="searchKeyUpdate">
+              <input type="submit" class='' value="update" id="salesReportSubmit">
+            </form>
+          </div> --}}
+
+
+          <hr>
+            {{!-- search data form --}}
+            <div class="mytalbles">
+              {{#if show}}
+              <form>
+                <table class="table table-sm table-stripped table-hover" id="etable">
+                  
+                    
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>saleID</th>
+                      <th>Customer</th>
+                      <th>Company</th>
+                      <th>UserName</th>
+                      <th>Billing Type</th>
+                      <th>Amount</th>
+                      <th>Credit</th>
+                      <th>Debit</th>
+                      <th>Receipt No</th>
+                      <th>Sale Date</th>
+                      <th>Remarks</th>
+                    </tr>
+                  </thead>  
+                 
+                  <tbody>
+                    {{#saleData}}
+
+                    <tr>
+                      <td>{{sale_id}}</td>
+                      <td>{{full_name}}</td>
+                      <td>{{cname}}</td>
+                      <td>{{user_name}}</td>
+                      <td>{{tname}}</td>
+                      <td>{{amount}}</td>
+                      <td>{{payment}}</td>
+                      <td>{{balance}}</td>
+                      <td>{{reciept_no}}</td>
+                      <td>{{sale_date}}</td>
+                      <td>{{remarks}}</td>
+
+                      {{/saleData}}
+                    </tr>
+                  </tbody>
+                </table>
+              </form> 
+              {{/if}}  
+            </div>
+            {{!-- update Data Form --}}
+           
+            <div>
+                <table class="table table-hover table-striped">
+                  <div class="thead" style="font-size:18px; text-align: center; font-weight:bolder;">
+                    {{#if showU}}
+                    <thead>
+                      <tr>
+                      {{!-- <td></td> --}}
+                      <td>sale ID</td>
+                      <td>Customer</td>
+                      <td>Company</td>
+                      <td>User Name</td>
+                      <td>Billing Type</td>
+                      <td> Amount</td>
+                      <td>Payment</td>
+                      <td>Receipt No</td>
+                      <td>Sale Date</td>
+                      <td>Remarks</td>
+                    </tr>
+                    </thead>
+                    {{/if}}
+                  </div>
+                  <tbody>
+                    {{#saleDataUpdate}}
+                    {{!-- <a href="/api/updateSaleRecord" id="updateSale"> --}}
+                      <tr style="transform: rotate(0);">
+                        {{!-- <th scope="row"><a href="#" class="stretched-link"></a></th> --}}
+                        <td>{{sale_id}}</td>
+                        <td>{{full_name}}</td>
+                        <td>{{cname}}</td>
+                        <td>{{user_id}}</td>
+                        <td>{{tname}}</td>
+                        <td>{{amount}}</td>
+                        <td>{{payment}}</td>
+                        <td>{{reciept_no}}</td>
+                        <td>{{sale_date}}</td>
+                        <td>{{remarks}}</td>
+                        {{/saleDataUpdate}}
+                      </tr>
+                      {{!--
+                    </a> --}}
+
+                  </tbody>
+                </table>
+                </div> 
+            --}}
+      </div> {{!-- righty --}}
+    </div> {{!-- main --}}
+  </div>
+
+  {{>footer}}
+<script src="../static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script src="jquery-3.3.1.slim.min.js"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="../static/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script> 
+
+<script type="text/javascript">
+$(document).ready(function() 
+	{  
+	    $('#etable').DataTable( 
+	    {             
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+	        dom: 'Blfrtip',
+            buttons: [      
+                {
+                    extend: 'excelHtml5',
+                    title: 'Sales Report',
+                    text:'Export to Excel' 
+                },
+                
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Sales Report',
+                    className: 'btn_pdf',
+                    text: 'Export to PDF' 
+                },
+	       ]	        
+	    });
+	} );
+</script>
+
+</body>
+</html>

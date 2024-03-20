@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Bootstrap CSS CDN -->
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="static/css/sidebar.css">
+    <!-- Font Awesome JS -->
+    <script defer src="static/js/solid.js"></script>
+    {{!--
+    <script defer src="static/js/fontawesome.js"></script> --}}
+    {{!-- <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script> --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+
+
+</head>
+
+<body>
+    <div class="main">
+        <nav id="sidebar">
+
+            <div class="sidebar-header">
+                <h3>Purchas Sales</h3>
+                <strong>PS</strong>
+                <text id="slogan">
+                    Mobile Credit Purschase and Sales Management System
+
+                </text>
+
+
+            </div>
+
+            <ul class="list-unstyled components">
+                {{!-- home --}}
+                <li class="active2">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="/overview">Overview</a>
+                        </li>
+                        <li>
+                            <a href="#">Updates</a>
+                        </li>
+                        <li>
+                            <a href="/logs">Logs Reports</a>
+                        </li>
+                    </ul>
+                </li>
+
+                {{!-- Sales and Purchase --}}
+                <li>
+                    <a href="#sales" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa-solid fa-cash-register"></i> 
+                       Sales and Purchase
+                        
+                    </a>
+                    <ul class="collapse list-unstyled" id="sales">
+                        <li>
+                            <a href="/api/newSale">Sales</a>
+                        </li>
+                        <li>
+                            <a href="/api/salesReports">Sales Reports</a>
+                        </li>
+                        <li>
+                            <a href="/api/newPurchase">Purchase </a>
+                        </li>
+                        <li>
+                            <a href="/api/purchaseReports">Purchase Report</a>
+                        </li>
+                    </ul>
+
+
+                    {{!-- employees --}}
+                <li>
+                    <a href="#employees" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa-solid fa-laptop-file"></i>
+                        Employees
+                    </a>
+                    <ul class="collapse list-unstyled" id="employees">
+                        <li>
+                            <a href="/api/employees">Employees</a>
+                        </li>
+                        <li>
+                            <a href="/api/newEmployee">New Employee</a>
+                        </li>
+                        <li>
+                            <a href="/api/employeesReport">Employees Report</a>
+                        </li>
+                    </ul>
+
+
+
+                    {{!-- Customers --}}
+                    <a href="#custumers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa-solid fa-address-book"></i>
+                        Custumers
+                    </a>
+                    <ul class="collapse list-unstyled" id="custumers">
+                        <li>
+                            <a href="/api/customer">Custumers</a>
+                        </li>
+                        <li>
+                            <a href="/api/newCustomer">New Custumer</a>
+                        </li>
+                        <li>
+                            <a href="/api/customersReport">Custumers Report</a>
+                        </li>
+                    </ul>
+
+                    {{!-- suppliers --}}
+                    <a href="#supliers" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa-solid fa-parachute-box"></i>
+                        Supliers
+                    </a>
+                    <ul class="collapse list-unstyled" id="supliers">
+                        <li>
+                            <a href="/api/company">Suppliers</a>
+                        </li>
+                        <li>
+                            <a href="/api/newCompany">New Supplier</a>
+                        </li>
+                        <li>
+                            <a href="/api/companyReport">Supliers Reports</a>
+                        </li>
+                        <li>
+                            <a href="/api/newCompanyContact"> New Suplier Contact </a>
+                        </li>
+                    </ul>
+
+                    {{!-- users --}}
+                    <a href="#users" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        Users
+                    </a>
+                    <ul class="collapse list-unstyled" id="users">
+                        <li>
+                            <a href="/api/user"><i class="fa fa-user" aria-hidden="true"></i> Users</a>
+                        </li>
+                        <li>
+                            <a href="/api/newUser"><i class="fa fa-user-plus" aria-hidden="true"></i> Register User</a>
+                        </li>
+                        <li>
+                            <a href="/api/userReport"><i class="fa fa-user-circle" aria-hidden="true"></i> Users
+                                Reports</a>
+                        </li>
+                    </ul>
+
+                </li>
+                {{!-- gallery --}}
+                <li>
+                    <a href="/gallery">
+                        <i class="fas fa-image"></i>
+                        Gallary
+                    </a>
+                </li>
+                {{!-- FAQ --}}
+                <li>
+                    <a href="/help">
+                        <i class="fas fa-question"></i>
+                        HELP
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </div>
+
+
+
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+
+    <script src="static/js/jquery-3.3.1.slim.min.js"></script>
+    <!-- Popper.JS -->
+    <script src="static/js/popper.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="static/js/bootstrap.min.js"></script>
+
+    {{!--
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                ($('#logo').toggle());
+                ($('#slogan').toggle());
+
+            });
+        }); --}}
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1349 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Cridet Sales Mgt System</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/sidebar.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  {{!--
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script> --}}
+  {{!--
+  <link rel="stylesheet" href="../static/js/fontawesome.js"> --}}
+  <script src="../static/js/solic.js"></script>
+
+
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div>
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+        {{!-- Contenst Start --}}
+
+        <div class="contents">
+          <div class="formtitle">
+            <h2> Sales </h2>
+          </div>
+          {{!-- new sale button --}}
+          {{#if newS}}
+          <form action="/api/newSaleForm" method="post" style="padding-left:20px; text-align:center;">
+            <input type="submit" class="btn" value="New Sale"
+              style="display:inline-block; width:40%; margin-bottom:5px;">
+          </form>
+          {{!-- dash grid --}}
+          <div class="grid-button">
+            <div class="grid-item" style="border:1px solid #adadad ;">
+              <form action="/api/loadallSData" method="post" id="" class="" name="">
+                <label>To search record enter sale-id, customer name, company name, username or receipt no.</label>
+                <input type="search" class="form-control" name="skey" placeholder="search"
+                  style="display:inline-block; width:100%;"> <br>
+                <input type="submit" class="btn" placeholder="search" value="Search Record"
+                  style="display:inline-block; width:70%; ">
+              </form>
+            </div>
+            <div class="grid-item" style="border:1px solid #adadad ;">
+              <form action="/api/searchToUpdateSales" method="post">
+                <label>To update record enter sale id or receipt No: </label>
+                <input type="search" class="form-control" name="sUSearchkey" value="" placeholder="search"
+                  style="display:inline-block; width:100%"> <br>
+                <input type="submit" class="btn" name="Seach" placeholder="search" value="Search"
+                  style="display:inline-block; width:70%">
+              </form>
+            </div>
+            <div class="grid-item" style="border:1px solid #adadad ;">
+              <form action="/api/searchToDeleteSales" method="post">
+                <label>To delete record enter sale id or receipt No: </label>
+                <input type="search" class="form-control" name="pDSearchkey" value="" placeholder="search"
+                  style="display:inline-block; width:100%"> <br>
+                <input type="submit" class="btn" value="Search " style="display:inline-block; width:70%">
+              </form>
+            </div>
+          </div>
+          {{/if}}
+
+          <div>
+            {{!-- alerts --}}
+            {{#if alr}}
+                	<div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    	{{alr}}
+                    	<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>  
+             	{{/if}}
+            {{!-- search sale data --}}
+            {{#if allSDataMst2}}
+            <div>
+              <form action="#" method="get">
+                <table id="saleDataShow" class="table table-hover table-striped table-success">
+                  <thead>
+                    <tr>
+                      <th>sale id</th>
+                      <th>name</th>
+                      <th>company</th>
+                      <th>user</th>
+                      <th>trns type</th>
+                      <th>amount</th>
+                      <th>creit</th>
+                      <th>receiptNo</th>
+                      <th>date</th>
+                      <th>remarks
+                      <th>
+                    </tr>
+
+                  </thead>
+                  <tbody>
+                    {{#allSData}}
+                    <tr>
+                      <td>{{sale_id}}</td>
+                      <td>{{name}}</td>
+                      <td>{{cname}}</td>
+                      <td>{{user_name}}</td>
+                      <td>{{tname}}</td>
+                      <td>{{amount}}</td>
+                      <td>{{payment}}</td>
+                      <td>{{reciept_no}}</td>
+                      <td>{{sale_date}}</td>
+                      <td>{{remarks}}</td>
+                    </tr>
+                    {{/allSData}}
+                  </tbody>
+                </table>
+              </form>
+            </div>
+            {{/if}}
+
+            {{!-- search by id to update sale data --}}
+            {{#if saleDataU}}
+            <div class="formsubtitle">
+              <h4 style="text-align:center;"> Update Sale </h4>
+              <div style="text-align:center; font-style:italic;color:tomato">
+                <u><label>Debit: {{cbalance}}</label></u>
+              </div>
+              {{#sSData}}
+              <div>
+                <h4>Customer Information</h4>
+                <form action="#" class="rform">
+                  <table style="width:100%">
+                    <tr>
+                      <th style="width:40% ;">  </th>
+                      <th style="width: ;"></th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Customer Unique ID: </label>
+                          <input type="text" placeholder="" value="{{cust_u_id}}" name="cust_u_id" readonly>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Customer Name: </label>
+                          <input type="text" placeholder="" value="{{name}}" name="" readonly>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Mobile Number: </label>
+                          <input type="text" placeholder="" value="{{cust_mobile}}" name="" readonly>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Email Address: </label>
+                          <input type="text" placeholder="" value="{{cust_email}}" name="" readonly>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Commission in Percentage: </label>
+                          <input type="text" placeholder="" value="{{cust_comi}}%" name="" readonly>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr style="border-top: 1px solid #adadad">
+                      <th> <br> </th>
+                    </tr>
+
+                  </table>
+                </form>
+              </div>
+              <h4>Sale Information</h4>
+              <div class="mainform">
+                <div class="addemployee">
+                  <form action="/api/updateSaleInfo" method="post" class="" id="addEmployee" name="addEmp">
+                    <table style="width:100%; ">
+                      <tr>
+                        <th style="width:30%;"> </th>
+                        <th> </th>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Sale ID: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{sale_id}}" name="sale_id" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Company: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{cname}}" name="company" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Transtaction by: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{tname}}" name="trType" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Reciept Number: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{reciept_no}}" name="reciept_no" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Amount: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{amount}}" name="amount" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Payment: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{payment}}" name="payment" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Date: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{sale_date}}" name="sale_date" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Remarks: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{remarks}}" name="remarks" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Picture: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{image}}" id="invice_pic" name="invoice_pic" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr style="text-align:right ;">
+                        <td></td>
+                        <td colspan="2" class="btns">
+                          <input type="submit" value="Update" id="submitEmpForm">
+
+                        </td>
+                      </tr>
+
+                    </table>
+                  </form>
+                  <span></span>
+                </div>
+              </div>
+              {{/sSData}}
+            </div>
+            {{/if}}
+
+            {{#if SdataUpdation}}
+             
+             <div class="formsubtitle">
+              <h4 style="text-align:center;"> Updating Sale Data </h4>
+              {{!-- <div style="text-align:center; font-style:italic;color:tomato">
+                <u><label>Debit: {{cbalance}}</label></u>
+              </div> --}}
+             
+             
+              <h4>Sale Information</h4>
+              <div class="mainform">
+                    <div class="forms">
+                      <div class="salesform sf">
+                        <form action="/api/loadcompany" method="post" name="" id="myForm" class="formhead">
+                          <div class="ddlist">
+                            <label for=""> Select Company:  </label>
+                            <select id="comp2" name="comp2" class="companyy" style="width: 250px;" required> 
+                              <option value="Select Company">Select Company </option> 
+                              {{#company_data}}
+                              <% for (let i=0; i<{{comp_name}}.length; i++) { %>
+                                <option value="{{comp_name}}" name="comp_data"> {{comp_name}} </option>
+                                <%}%>
+                              {{/company_data}}
+                            </select>
+                          </div>
+                        </form>
+                      </div>
+                      {{!-- select transactin type dropdown --}}
+                      <div class="salesform">
+                        <form action="#" method="" class="formhead">
+                          <div class="ddlist">
+                            <label for=""> Transaction Type: </label>
+                            <select name="ttype2" id="ttype2" style="width: 250px;" required> *
+                              <option value="Select Transaction Type" >Select Transaction Type</option>
+                              {{#tran_data}}
+                              <% for (let i=0; i<{{type_name}}.length; i++) { %>
+                                <option value="{{type_name}}"> {{type_name}} </option>
+                                <%}%>
+                                  {{/tran_data}}
+                                  <br>
+                            </select>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+               {{#sSData2}}
+                <div style="background-color:azure; padding-left:20px;">
+                    <table >
+                      <tr >
+                        <tr>
+                          <th width="15%"></th>
+                          <th width="15%" align="left"></th>
+                        </tr>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Customer Name</label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{name}}" name="" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                        <td lign="right">
+                          <div class="">
+                            <label for=""> Customer Unique ID: </label>
+                          </div>
+                        </td>
+                        <td align="right">
+                          <div class="txt_field">
+                            <input type="text" value="{{cust_u_id}}" name="" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                        
+                      </tr>
+                       
+                       <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Transtaction by: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{tname}}" name="trType" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                        
+                        <td>
+                          <div class="">
+                            <label for=""> Company: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{cname}}" name="company" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>                     
+                      </tr>
+                  </table>
+                  </div>
+                  <hr>
+                <div class="addemployee" style="background-color:rgb(252, 252, 248);">
+                  <form action="/api/submitSaleUpdate" method="post" class="" id="addEmployee" name="addEmp">
+                    <table style="width:100%; ">
+                      <tr>
+                        <th style="width:30%;"> </th>
+                        <th> </th>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Sale ID: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{sale_id}}" name="sale_id" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Reciept Number: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{reciept_no}}" name="reciept_no" >
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Amount: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{amount}}" name="amount" >
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Payment: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{payment}}" name="payment" >
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Remarks: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{remarks}}" name="remarks" >
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Picture: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{image}}" id="invice_pic" name="invoice_pic" >
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr style="text-align:right ;">
+                        <td></td>
+                        <td colspan="2" class="btns">
+                          <input type="submit" value="Submit Update" id="submitEmpForm">
+
+                        </td>
+                      </tr>
+
+                    </table>
+                  </form>
+                  <span></span>
+                </div>
+              </div>
+              {{/sSData2}}
+            </div>
+            {{/if}}
+
+            {{#if saleDataD}}
+            <div class="formsubtitle">
+              <h4 style="text-align:center;"> Delete Sale </h4>
+              <div style="text-align:center; font-style:italic;color:tomato">
+                <u><label>Debit: {{cbalance}}</label></u>
+              </div>
+              {{#sSDataD}}
+              <div>
+                <h4>Customer Information</h4>
+                <form action="#" class="rform">
+                  <table style="width:100%">
+                    <tr>
+                      <th style="width:40% ;">  </th>
+                      <th style="width: ;"></th>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Customer Unique ID: </label>
+                          <input type="text" placeholder="" value="{{cust_u_id}}" name="cust_u_id" readonly>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Customer Name: </label>
+                          <input type="text" placeholder="" value="{{name}}" name="" readonly>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Mobile Number: </label>
+                          <input type="text" placeholder="" value="{{cust_mobile}}" name="" readonly>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Email Address: </label>
+                          <input type="text" placeholder="" value="{{cust_email}}" name="" readonly>
+                        </div>
+                      </td>
+
+                      <td>
+                        <div class="txt_f">
+                          <label for=""> Commission in Percentage: </label>
+                          <input type="text" placeholder="" value="{{cust_comi}}%" name="" readonly>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr style="border-top: 1px solid #adadad">
+                      <th> <br> </th>
+                    </tr>
+
+                  </table>
+                </form>
+              </div>
+              <h4>Sale Information</h4>
+              <div class="mainform">
+                <div class="addemployee">
+                  <form action="/api/deleteSaleData" method="post" class="" id="addEmployee" name="addEmp">
+                    <table style="width:100%; ">
+                      <tr>
+                        <th style="width:30%;"> </th>
+                        <th> </th>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Sale ID: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{sale_id}}" name="sale_id" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Company: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{cname}}" name="company" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Transtaction by: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{tname}}" name="trType" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Reciept Number: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{reciept_no}}" name="reciept_no" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Amount: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{amount}}" name="amount" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Payment: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{payment}}" name="payment" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Date: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{sale_date}}" name="sale_date" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Remarks: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{remarks}}" name="remarks" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <div class="">
+                            <label for=""> Picture: </label>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="txt_field">
+                            <input type="text" value="{{image}}" id="invice_pic" name="invoice_pic" readonly>
+                            <label for=""> </label>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr style="text-align:right ;">
+                        <td></td>
+                        <td colspan="2" class="btns">
+                          <input type="submit" value="Delete Sale" id="submitEmpForm">
+
+                        </td>
+                      </tr>
+
+                    </table>
+                  </form>
+                  <span></span>
+                </div>
+              </div>
+              {{/sSDataD}}
+            </div>
+            {{/if}}
+            <div></div>
+          </div>
+
+          <div class="alertss">
+            {{#each alerts}}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              {{msg}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/each}}
+            {{#salemsg}}
+            <div class="alert alert-success" role="alert">
+              Sale Data Inserted Successully
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {{/salemsg}}
+
+
+
+          </div>
+
+
+          {{#if swd}}
+          <div class="formsubtitle">
+            <h4> New Sale </h4>
+
+            <div class="searchform">
+              <div class="">
+                <form action="/api/selectCustomer" method="post" class="formhead" id="">
+                  <div class=" form-control" style="text-align:center ;">
+                    <label for=""> Select Customer: </label>
+                    <input type="search" class="form-group mb-2" placeholder="enter customer name or unique id" name="cust_fname"
+                      style="padding:4px 30px; width:400px; margin-left:10px;" autofocus>
+                    <input type="submit" value="Search" name="searchCustomer"
+                      style="padding:0 30px ; margin-left:10px; ">
+                    <label for=""> </label>
+                  </div>
+                </form>
+              </div>
+              {{!-- select company and transactin type dropdown --}}
+              <div class="forms">
+                <div class="salesform sf">
+                  <form action="/api/loadcompany" method="post" name="" id="myForm" class="formhead">
+                    <div class="ddlist">
+                      <label for=""> Select Company: </label>
+                      <select id="companyy" name="companyy" class="companyy" style="width: 220px;">
+                        <option value="Select Company">Select Company</option>
+                        {{#company_data}}
+                        <% for (let i=0; i<{{comp_name}}.length; i++) { %>
+                          <option value="{{comp_name}}" name="comp_data"> {{comp_name}} </option>
+                          <%}%>
+                            {{/company_data}}
+                      </select>
+                    </div>
+                  </form>
+                </div>
+                {{!-- select transactin type dropdown --}}
+                <div class="salesform">
+                  <form action="#" method="" class="formhead">
+                    <div class="ddlist">
+                      <label for=""> Transaction Type: </label>
+                      <select name="ttype" id="ttype" style="width: 220px;">
+                        <option value="Select Transaction Type">Select Transaction Type</option>
+                        {{#tran_data}}
+                        <% for (let i=0; i<{{type_name}}.length; i++) { %>
+                          <option value="{{type_name}}"> {{type_name}} </option>
+                          <%}%>
+                            {{/tran_data}}
+                            <br>
+                      </select>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{!-- retrieved data form --}}
+
+          <div class="formsubtitle">
+            <form class="rform" style="background-color:#FAF9F6; padding: 0 5px;">
+              {{#data}}
+              <table style="width:100%">
+                <tr>
+                  <th style="width:40% ;"> Customer Information: </th>
+                  <th style="width: ;">...</th>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="txt_f">
+                      <label for=""> Customer Unique ID: </label>
+                      <input type="text" placeholder="" value="{{cust_u_id}}" name="cust_u_id" readonly>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="txt_f">
+                      <label for=""> Customer Name: </label>
+                      <input type="text" placeholder="" value="{{fullname}}" name="" readonly>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="txt_f">
+                      <label for=""> Mobile Number: </label>
+                      <input type="text" placeholder="" value="{{cust_mobile}}" name="" readonly>
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td>
+                    <div class="txt_f">
+                      <label for=""> Email Address: </label>
+                      <input type="text" placeholder="" value="{{cust_email}}" name="" readonly>
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="txt_f">
+                      <label for=""> Commission in Percentage: </label>
+                      <input type="text" placeholder="" value="{{cust_comi}}%" name="" readonly>
+                    </div>
+                  </td>
+
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr style="border-top: 1px solid #adadad">
+                  <th> <br> </th>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="txt_f">
+                      <label for=""> Company Name: </label>
+                      <input type="text" id="cpname" name="cpname" placeholder="" value="" class="">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <th></th>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="txt_f">
+                      <label for=""> Transtaction Type: </label>
+                      <input type="text" id="trans_type" name="trans_type" placeholder="" value="" class="">
+                      <br><br>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              {{/data}}
+            </form>
+          </div>
+
+          <div class="">
+            {{!-- <h2>sales Balance </h2> --}}
+            <div style="background-color:rgb(247, 231, 231); padding:10px;margin:auto;padding-left:20%; lngth:100%">
+              {{#bal}}
+              <strong>
+                <th>Due Balance: </th> <span></span>
+                <th>{{balance}}</th> <br>
+                <th>Total Balance: </th> <span></span>
+                <th>...</th>
+              </strong>
+              {{/bal}}
+            </div>
+          </div>
+
+          {{!-- sales data entry form --}}
+          <div class="mainform">
+            <div class="addemployee">
+              <form action="/api/transaction" method="post" class="" id="addEmployee" name="addEmp" enctype = "multipart/form-data">
+                <table style="width:100%; ">
+                  <tr>
+                    <th style="width:30%;"> </th>
+                    <th> </th>
+                  </tr>
+                  <tr>
+                    {{#data}}
+                    <td>
+                      <div class="">
+                        <label for=""> Customer Unique ID: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="" name="customer_u_id" value="{{cust_u_id}}" readonly>
+                        <input type="text" placeholder="" name="customer_id" value="{{cust_id}}" hidden>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  {{/data}}
+
+                  <tr>
+                    {{#mydata}}
+                    <td>
+                      <div class="">
+                        <label for=""> Company ID*: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="compnay id" value="{{comp_id}}" name="company_id" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                    {{/mydata}}
+                  </tr>
+
+                  {{#tdata}}<tr>
+
+                    <td>
+                      <div class="">
+                        <label for=""> Transtaction Type ID: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <p></p>
+                      <div class="txt_field">
+                        {{!-- {{$tdata}} type_id--}}
+                        <input type="text" id="" name="transaction_type_id" value="{{type_id}}" readonly>
+                        {{!-- {{/tdata}} --}}
+                        <label for=""> </label>
+                      </div>
+                    </td>
+
+                  </tr> {{/tdata}}
+
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Reciept Number: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="recienpt number" name="reciept_no" autofocus>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Amount: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="amount" name="amount">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Payment: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="payment" name="payment">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  {{!-- <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Date: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="date" placeholder="" name="sale_date">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr> --}}
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Remarks: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="remarks" name="remarks">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Upload Pictures: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="ddlist">
+                        <input type="file" id="saleReciptImg" name="saleReciptImg" accept=".jpg, .jpeg, .png">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="btns">
+                      <input type="reset" class="" value="Reset" id="resetEmpForm">
+                      <input type="submit" value="Submit" id="submitEmpForm">
+                      <span></span>
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
+              <span></span>
+            </div>
+          </div>
+          {{/if}}
+        </div>
+        {{!-- Contents End --}}
+      </div>
+    </div>
+
+  </div>
+
+
+  <div>
+    {{#mydata}}
+    <input type="text" name="companyid" id="companyid" value="{{comp_id}}">
+    {{/mydata}}
+
+    {{#tdata}}
+    <input type="text" id="transactionTypeid" name="transactionTypeid" value="{{tpe_id}}">
+    {{/tdata}}
+
+    {{#user_data}}
+    <input type="text" name="user_id" value="user_id" hidden>
+    {{/user_data}}
+  </div>
+  {{>footer}}
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <!-- Optional JavaScript; choose one of the two! -->
+  {{!--
+  <script src="jquery-3.3.1.slim.min.js"></script> --}}
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js"
+    integrity="sha512-bztGAvCE/3+a1Oh0gUro7BHukf6v7zpzrAb3ReWAVrt+bVNNphcl2tDTKCBr5zk7iEDmQ2Bv401fX3jeVXGIcA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {{!--
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.js"
+    integrity="sha512-4WpSQe8XU6Djt8IPJMGD9Xx9KuYsVCEeitZfMhPi8xdYlVA5hzRitm0Nt1g2AZFS136s29Nq4E4NVvouVAVrBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+    integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  {{!--
+  <script src="../static/js/jquery-3.3.1.slim.min.js"></script> --}}
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+
+
+  <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+
+
+  <script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#saleDataShow').DataTable(
+        {
+          "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+          dom: 'Blfrtip',
+          buttons: [
+            {
+              extend: 'excelHtml5',
+              title: 'Sales',
+              text: 'Export to Excel'
+            },
+            {
+              extend: 'pdfHtml5',
+              title: 'Sales',
+              className: 'btn_pdf',
+              text: 'Export to PDF'
+            },
+          ]
+        });
+
+
+      document.getElementById("companyy").onchange = function () { cfunction() };
+      function cfunction() {
+        let x = document.getElementById("companyy").value;
+        document.getElementById("cpname").value = x;
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/loadcompany',
+          dataType: 'html',
+          data: {
+            cname: x,
+            // surname: $("#profile_surname").val(), 
+          },
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+
+      document.getElementById("ttype").onchange = function () { tfunction() };
+      function tfunction() {
+        let y = document.getElementById("ttype").value;
+        document.getElementById("trans_type").value = y;
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/loadtrans',
+          dataType: 'html',
+          data: {
+            tname: y,
+            // surname: $("#profile_surname").val(),
+          },
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+
+      
+      
+            
+      
+      // document.getElementById('submitF').click = mfunction(){}; 
+
+      //event.preventDefault();
+    });
+
+document.getElementById("comp2").onchange = function () { mfunction() };     
+      function mfunction() {
+        let m = document.getElementById("comp2").value;
+        //document.getElementById("cpname").value = m;
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/loadcompany2',
+          dataType: 'html',
+          data: {
+            cppname: m,
+            // surname: $("#profile_surname").val(), 
+          },
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+
+      document.getElementById("ttype2").onchange = function () { nfunction() };
+      function nfunction() {
+        let nn = document.getElementById("ttype2").value;
+        // document.getElementById("trans_type").value = y;
+        console.log(nn)
+        $.ajax({
+          global: false,
+          type: 'POST',
+          url: '/api/loadtrans2',
+          dataType: 'html',
+          data: {
+            tname: nn,
+            // surname: $("#profile_surname").val(),
+          },
+          success: function (result) {
+            console.log(result);
+          },
+          error: function (request, status, error) {
+            serviceError();
+          }
+          // document.getElementById("myForm").ajaxSubmit(); 
+        });
+      }
+
+
+    /* cfunction();
+   document.getElementById("mmm").onsubmit = function(){
+     document.getElementById("companyy").onchange = function cfunction (){
+     var x = document.getElementById("companyy").value;
+     document.getElementById("cpname").innerHTML = x;
+   
+   } 
+   }*/
+    /*
+    $(".companyy" ).change(function() {
+      alert( "Handler for .change() called." );
+    });*/
+    /*
+    //$(function(){
+      $('#getData').on('click', function(){
+        $.ajax({
+          url: '/api/loadcompany', 
+          contentType: 'application/JSON',
+          success: function(response){
+            console.log(response); 
+          }
+        });
+      }); 
+    //}); */
+    /*
+    function submitForm(){
+      let cpname = getElementById(cpname).value; 
+      let trans_type = getElementById(trans_type).value; 
+      let req = new XMLHttpRequest();
+      req.open("POST", '/api/loadcompany'); 
+      req.setRequestHeader("Content-type", "application/x-www-form-urlencoded"); 
+      req.send("cpname="+cpname+"&trans_type="+trans_type); 
+    
+      return false; 
+    }
+    */
+
+
+
+
+  </script>
+
+</body>
+
+</html>

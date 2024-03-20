@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-lg navbar-light border-bottum bg-light py-2" >
+  <div class="container" >
+    <a class="navbar-brand" href="/"><i class="fa-solid fa-house"></i> Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          {{!-- <a class="nav-link" href="#">Link</a> --}}
+
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            {{#if user}}
+            {{user.user_name}}
+            {{else}}
+            User
+            {{/if}}
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+            {{#if user}}
+            <li><a class="dropdown-item" href="/api/profile">
+                <i class="fa-solid fa-user"></i>
+                Profile
+              </a>
+            </li>
+           
+            <li><a class="dropdown-item" href="/api/logout">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                Logout
+              </a>
+            </li>
+            {{else}}
+            {{!-- <li>
+              <hr class="dropdown-divider">
+            </li> --}}
+            <li><a class="dropdown-item" href="/api/login">
+                <i class="fa-solid fa-arrow-right-to-arc"></i> 
+                Login
+                </a>
+            </li>
+            {{/if}}
+          </ul>
+        </li>
+        
+        {{!-- <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"></a>
+        </li> --}}
+      </ul>
+
+    </div>
+  </div>
+</nav>

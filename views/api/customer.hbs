@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  {{!--
+  <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Credit Sales Mgt System</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/sidebar.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  <link rel="stylesheet" href="../static/js/fontawesome.js">
+  <script src="../static/js/solic.js"></script>
+
+
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div>
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+        <h1>Customers</h1>
+        {{#if msg}}
+        <text style="color:darkblue"> Customer Data Added </text>
+        {{/if}}
+        <div class="contents">
+          <div class="mainContents">
+            <div class="actionmenu">
+              <div class="newemp">
+                To add new customer click button
+                <button onclick="window.location.href='../api/newCustomer';" class="btn">
+                  Add New Customer
+                </button>
+              </div>
+
+              <div class="searchemp">
+                enter customer name or id to search
+                <form action="/api/searchCust" method="post">
+                  <input type="search" placeholder="search name or id" name="cust_fname">
+                  <input type="submit" value="Search" class="btn">
+                </form>
+              </div>
+              <div class="delemp">
+                enter customer name or id to Delete
+                <form action="/api/delCust" method="post">
+                  <input type="search" placeholder="Enter name or id" name="cust_fname">
+                  <input type="submit" value="Show Data" class="btn">
+                </form>
+              </div>
+            </div>{{!-- end action menu --}}
+
+            {{!-- search form --}}
+            <div class="searchform">
+              {{#if msg}}
+              <text style="color:blue">Customer Record Inserted</text>
+              {{/if}}
+              {{#if updatemsg}}
+              <text style="color:blue">Customer Data Updated</text>
+              {{/if}}
+              {{#each alerts}}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  {{msg}}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div> data not updated 
+              {{/each}}
+
+              {{#if empSaerchFound}}
+              <h3>Data found</h3>             
+              <form action="/api/updateCustomer" method="post" class="" id="addEmployee">
+                {{#data}}
+                <table style="width:100%; ">
+                  <tr>
+                    <th style="width:30%;"> </th>
+                    <th> </th>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for="id"> Customer ID: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="" value="{{cust_id}}" name="cust_id" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for="id"> Unique ID: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="" value="{{cust_u_id}}" name="cust_u_id">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> First Name: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_fname" value="{{cust_fname}}" placeholder="First Name">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Last Name: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_lname" value="{{cust_lname}}" placeholder="Last Name">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Commission Percentage: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_comi" value="{{cust_comi}}" placeholder="Father Name">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Mobile Number: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_mobile" value="{{cust_mobile}}" placeholder="Mobile Number"
+                          required>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Email: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_email" value="{{cust_email}}" placeholder="Email">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Adress: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_address" value="{{cust_address}}" placeholder="address">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> registration Date </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_reg_date" value="{{cust_reg_date}}" placeholder="address"
+                          readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    {{/data}}
+
+                    <td>...</td>
+                    <td>...</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="btns">
+                      {{!-- <input type="reset" class="btn btn-secondary" value="Reset" id="resetEmpForm"> --}}
+                      <input type="submit" value="Update" class="btn btn-secondary" id="submitEmpForm">
+                      <span></span>
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
+              {{/if}}
+              {{#if empSaerch}}
+              Customer data Not Found
+              {{/if}}
+
+              {{!-- delete form --}}
+
+              {{#if delrecord}}
+              <text style="color:rgb(153, 8, 8)"> Customer Record Deleted</text>
+              {{/if}}
+              {{#if custFound}}
+              <h3> Customer Details </h3>
+              <form action="/api/deleteCustomer" method="post" class="" id="addEmployee">
+                {{#data}}
+                <table style="width:100%; ">
+                  <tr>
+                    <th style="width:30%;"> </th>
+                    <th> </th>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for="id"> Unique ID: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="id" value="{{cust_id}}" name="cust_id" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> First Name: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_fname" value="{{cust_fname}}" placeholder="First Name" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Last Name: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_lname" value="{{cust_lname}}" placeholder="Last Name" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Commission Percentage: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_comi" value="{{cust_comi}}" placeholder="Father Name" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Mobile Number: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_mobile" value="{{cust_mobile}}" placeholder="Mobile Number"
+                          readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Email: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_email" value="{{cust_email}}" placeholder="Email" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Adress: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_address" value="{{cust_address}}" placeholder="address" readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> registration Date </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" name="cust_reg_date" value="{{cust_reg_date}}" placeholder="address"
+                          readonly>
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    {{/data}}
+
+                    <td>...</td>
+                    <td>...</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="btns">
+                      {{!-- <input type="reset" class="btn btn-secondary" value="Reset" id="resetEmpForm"> --}}
+                      <input type="submit" value="Delete" class="btn btn-secondary" id="submitEmpForm">
+                      <span></span>
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
+              {{/if}}
+              {{#if custdel}}
+              customer Details Not Found please check name spelling and try again
+              {{/if}}
+            </div>
+
+            {{!-- End of delete form --}}
+
+          </div>{{!-- End mianContents --}}
+
+          {{!-- <div class="viewcontents">
+            <form action="/api/showall" class="">
+              <input type="submit" class="btn btn-secondary btn-show" value="Show All Records">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unique ID </th>
+                    <th scope="col">Tazkira No </th>
+                    <th scope="col">First Name </th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Father Name</th>
+                    <th scope="col">Mobile No</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Registratoin Date</th>
+                    <th scope="col">Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#data2}}
+                  <tr>
+                    <td>{{id}}</td>
+                    <td>{{tazkira_id}}</td>
+                    <td>{{fname}}</td>
+                    <td>{{lname}}</td>
+                    <td>{{father_name}}</td>
+                    <td>{{mobile}}</td>
+                    <td>{{email}}</td>
+                    <td>{{address}}</td>
+                    <td>{{reg_date}}</td>
+                    <td>{{status}}</td>
+                  </tr>
+                  {{/data2}}
+                </tbody>
+              </table>
+            </form>
+          </div> End viewcontents --}}
+          <div class="viewcontents">
+            <form action="/api/showallCust" class="">
+              <input type="submit" class="btn btn-secondary btn-show" value="Show All Records">
+              <br>
+              <hr>
+              <br>
+              <table class="table table-hover" id="ctable">
+                <thead>
+                  <tr>
+                    <th scope="col">Customer ID </th>
+                    <th scope="col">First Name </th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Commission Percentage</th>
+                    <th scope="col">Mobile No</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Registratoin Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#data2}}
+                  <tr>
+                    <td>{{cust_id}}</td>
+                    <td>{{cust_fname}}</td>
+                    <td>{{cust_lname}}</td>
+                    <td>{{cust_comi}}</td>
+                    <td>{{cust_mobile}}</td>
+                    <td>{{cust_email}}</td>
+                    <td>{{cust_address}}</td>
+                    <td>{{cust_reg_date}}</td>
+                  </tr>
+                  {{/data2}}
+                </tbody>
+              </table>
+            </form>
+          </div> {{!-- End of viewcontents --}}
+
+
+        </div>{{!-- end of contents --}}
+
+      </div>
+    </div>
+  </div>
+  {{>footer}}
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script src="jquery-3.3.1.slim.min.js"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="../static/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
+
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script> 
+
+
+<script type="text/javascript">
+	$(document).ready(function() 
+	{ 
+	    $('#ctable').DataTable( 
+	    {             
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+	        dom: 'Blfrtip',
+            buttons: [      
+                {
+                    extend: 'excelHtml5',
+                    title: 'Customers',
+                    text:'Export to Excel' 
+                },             
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Customers',
+                    className: 'btn_pdf',
+                    text: 'Export to PDF' 
+                },
+	       ]	        
+	    });
+        
+
+	} );
+	
+</script>
+
+</html>

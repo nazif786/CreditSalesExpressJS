@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  {{!--
+  <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Cridet Sales Mgt System</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/sidebar.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  <link rel="stylesheet" href="../static/js/fontawesome.js">
+  <script src="../static/js/solic.js"></script>
+
+
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div>
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+        <h1 style="text-align:center ;">Purchase Reports </h1>
+        <div>
+          <div class="grid-item">
+                <form action="/api/loadallPD" method="">
+                  <input type="submit" value="Show All Data" class="btn btn-secondary" style="padding:5px 12% ;">
+                </form>
+              </div>
+          <div style="border:1px solid #adadad ;">
+            {{!-- <div class="grid-button">
+              
+              <div class="grid-item" style="width: 40%;">
+                <form action="/api/searchPurchaseData" method="post">
+                  <input type="search" name="searchPurchase" value="" placeholder="search">
+                  <input type="submit" value="Search" Search> 
+                  <p style="color:rgb(58, 55, 55);">
+                  To search purchase data please enter 'purchase ID', Compnay Name, User Name, or Receipt No.
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div> --}}
+{{!-- load all purchse records form  --}}
+          <div class="records" style="background-color: white; padding-top: 5px;">
+            {{#if load_msg}}
+            <form action="" method="post" class="" id="" >
+              {{!-- <input type="submit" id="saleDataShow" onload="myfunc()" hidden> --}}
+              <div style="text-align:right ;">
+              	<input type="button" class="btn btn-primary" onclick="export_data()" value="Export xlsx" hidden>
+		          </div>
+              <table class="table table-hover table-striped" id="expData" style="background-color:#adadad ;">
+                <thead>
+                  <tr>
+                    <th scope="col">Purch ID </th>
+                    <th scope="col">Comp Name </th>
+                    <th scope="col">Trans Type </th>
+                    <th scope="col">User Name </th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Crdit</th>
+                    <th scope="col">Debit</th>
+                    <th scope="col">Receipt No</th>
+                    <th scope="col">Purchase Date</th>
+                    <th scope="col">Purch Comm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#allDataP}}
+                  <tr>
+                    <td>{{p_id}}</td>
+                    <td>{{comp_name}}</td>
+                    <td>{{type_name}}</td>
+                    <td>{{user_name}}</td>
+                    <td>{{p_amount}}</td>
+                    <td>{{p_payment}}</td>
+                    <td>{{bal}}</td>
+                    <td>{{p_reciept_no}}</td>
+                    <td>{{p_date}}</td>
+                    <td>{{p_com}}</td>
+                  </tr>
+                  {{/allDataP}}
+                </tbody>
+              </table>
+            </form>
+            <div class="break"></div>
+            <!--dispaly the link of the pages -->
+            {{!-- <div style="display: flex; align-items: center; justify-content: center;;">
+              <ul class="pagination">
+                {{#paginate pagination type="first"}}
+                <li {{#if disabled}} class="pageNumber disabled" {{/if}}><a class="page-link"
+                    href="/api/loadallPurchaseData?/?p={{n}}">First</a></li>
+                {{/paginate}}
+
+                {{#paginate pagination type="previous"}}
+                <li {{#if disabled}} class="pageNumber disabled" {{/if}}><a class="page-link"
+                    href="/api/loadallPD?/?p={{n}}">Prev</a></li>
+                {{/paginate}}
+
+                {{#paginate pagination type="middle" limit=pagination.pageCount}}
+                <li {{#if active}} class="pageNumber active" {{/if}}><a class="page-link"
+                    href="/api/loadallPD?/?p={{n}}">{{n}}</a></li>
+                {{/paginate}}
+
+                {{#paginate pagination type="next"}}
+                <li {{#if disabled}} class="pageNumber disabled" {{/if}}><a class="page-link"
+                    href="/api/loadallPD?/?p={{n}}">Next</a></li>
+                {{/paginate}}
+
+                {{#paginate pagination type="last"}}
+                <li {{#if disabled}}class="pageNumber disabled" {{/if}}><a class="page-link"
+                    href="/api/loadallPD?/?p={{n}}">Last</a></li>
+                {{/paginate}}
+              </ul>
+            </div> --}}
+            {{/if}}
+
+          </div>
+          {{#if load_msg2}}
+          {{!-- <div name="search purchases">
+            <form action="/api/searchPurchaseData" method="post" id="">
+            <div style="text-align:right ;">
+              	<input type="button" class="btn btn-primary" onclick="export_data2()" value="Export xlsx">
+		          </div>
+              <table class="table table-hover table-success" id="expData2">
+                <tr>
+                  <td>
+                    {{#searcherror}}
+                    <p style="color: darkred; font-weight:600"> no data found</p>
+                    {{/searcherror}}
+                  </td>
+                </tr>
+                <thead>
+                  <tr>
+                    <th scope="col">Purch ID </th>
+                    <th scope="col">Comp Name </th>
+                    <th scope="col">Trans Type </th>
+                    <th scope="col">User Name </th>
+                    <th scope="col">Purch Amount</th>
+                    <th scope="col">Credit</th>
+                    <th scope="col">Debit</th>
+                    <th scope="col">Receipt No</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Purch Comm</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#allData}}
+                  <tr>
+                    <td>{{p_id}}</td>
+                    <td>{{comp_name}}</td>
+                    <td>{{type_name}}</td>
+                    <td>{{user_name}}</td>
+                    <td>{{p_amount}}</td>
+                    <td>{{p_payment}}</td>
+                    <td>{{debit}}</td>
+                    <td>{{p_reciept_no}}<z/td>
+                    <td>{{p_date}}<z/td>
+                    <td>{{p_com}}</td>
+                  </tr>
+                  {{/allData}}
+                </tbody>
+              </table>
+            </form>
+          </div> --}}
+          {{/if}}
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+  {{>footer}}
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script src="jquery-3.3.1.slim.min.js"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="../static/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>	
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.4/css/buttons.dataTables.min.css">
+
+
+<script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script> 
+
+
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/dataTables.buttons.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.flash.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.html5.min.js"></script> 
+<script src="https://cdn.datatables.net/buttons/1.6.4/js/buttons.print.min.js"></script>   
+  <script>
+   /* function export_data() {
+      //alert("Welcome to the javaTpoint.com");
+      let data = document.getElementById('expData');
+      var fp = XLSX.utils.table_to_book(data, ['MySheets']);
+      XLSX.write(fp, {
+        bookType: 'xlsx',
+        type: 'base64'
+      });
+      let d = new Date(Date.now())
+      let D = 'Purchase_Report ' + d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate()
+      XLSX.writeFile(fp, D + '.xlsx')
+    }
+*/
+    function export_data2() {
+      //alert("Welcome to the javaTpoint.com");
+      let data = document.getElementById('expData2');
+      var fp = XLSX.utils.table_to_book(data, ['MySheets']);
+      XLSX.write(fp, {
+        bookType: 'xlsx',
+        type: 'base64',
+      });
+      let d = new Date(Date.now())
+      let D = 'Purchase_Report ' + d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate()
+      XLSX.writeFile(fp, D + '.xlsx')
+    }
+
+ $(document).ready(function() 
+	{ 
+	    $('#expData').DataTable( 
+	    {             
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+	        dom: 'Blfrtip',
+            buttons: [      
+                {
+                    extend: 'excelHtml5',
+                    title: 'Purchase Report',
+                    text:'Export to Excel' 
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Purchase Report',
+                    className: 'btn_pdf',
+                    text: 'Export to PDF' 
+                },
+	       ]	        
+	    });
+      
+
+      $('#expData2').DataTable( 
+	    {             
+            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+           
+	        dom: 'Blfrtip',
+            buttons: [      
+                {
+                    extend: 'excelHtml5',
+                    title: 'Purchase Report',
+                    text:'Export to Excel',
+                     className: 'btn_exl'
+
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: 'Purchase Report',
+                    className: 'btn_pdf',
+                    text: 'Export to PDF' 
+                },
+	       ]        
+	    });
+      $('.btn_pdf').attr[("class","btn btn-success")];
+      
+	} );   
+
+  
+      
+	 
+  
+  </script>
+
+</body>
+
+</html>

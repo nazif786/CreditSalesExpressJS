@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Cridet Sales Mgt System</title>
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../static/css/sidebar.css">
+  <link rel="stylesheet" href="../static/css/style.css">
+
+  {{!--
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script> --}}
+  {{!--
+  <link rel="stylesheet" href="../static/js/fontawesome.js"> --}}
+  <script src="../static/js/solic.js"></script>
+
+
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div>
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+        {{!-- Contenst Start --}}
+
+        <div class="contents">
+          <div class="formtitle">
+            <h2> Register New User </h2>
+          </div> 
+
+          <div class="mainform">
+            <div class="">
+              
+              
+
+              {{#if emp_found_msg}}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <text>Employee not found please check spelling and try agian</text>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div> 
+              {{/if}}
+
+              <form action="/api/selectEmployee" method="post" id="">
+                <div class="searchemp">
+
+                  <label> Select Employee: </label> 
+                  <input type="search" placeholder="Enter employee name or id" name="f_name" id="f_name" style="width:30% ;"> <br>
+                  <input type="submit" id="submitsearchemployees" value="Search" class="btn" style="padding:0 80px ;">
+                  <div class="signup_link">
+                    Not registered as Employee? <a href="/api/newEmployee">Register Employee</a>
+                  </div>
+                </div>
+              </form>
+
+
+              <div style="background-color:azure;">
+                <form method="post" class="" id="userdata">
+                  {{#data}}
+                  <table style="width:100%; margin: 10px">
+                    <tr>
+                      <th style="width:15%;"> </th>
+                      <th style="width:35%;"> </th>
+                      <th style="width:15%;"> </th>
+                      <th style=""> </th>
+                    </tr>
+
+                    <tr>
+                      <td><label for=""> Full Name: </label></td>
+                      <td><input type="text" name="fullname" value="{{fullname}}" placeholder="First Name" readonly></td>
+                      <td><label for="tazkira_id"> Tazkira Number: </label></td>
+                      <td><input type="text" placeholder="Tazkira Number" value="{{tazkira_id}}" name="tazkira_id"
+                          readonly></td>
+                    </tr>
+
+                    <tr style="text-align:start ;">
+                      <td><label for=""> Mobile Number: </label></td>
+                      <td><input type="text" name="mobile" value="{{mobile}}" placeholder="Mobile Number" readonly></td>
+                      <td><label for=""> Email: </label></td>
+                      <td><input type="text" name="email" value="{{email}}" placeholder="Email" readonly></td>
+                    </tr>
+                    <tr>
+                      <td><label for=""> Employee ID: </label></td>
+                      <td><input type="text" name="emp_id" value="{{id}}" placeholder="id"></td>
+                    </tr>
+                    <tr>
+                    </tr>
+                  </table>
+                  {{/data}}
+                  <br>
+                </form>
+              </div>
+
+
+              {{!-- form 2 .........................................................................................
+              --}}
+              {{#if notEmp}} 
+              <div class="alert alert-warning alert-dismissible fade show" role="alert"> 
+                {{notEmp}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div> 
+              {{/if}}
+
+              {{#chmsg}}
+              <div> </div>
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <text>Username already in use</text>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              {{/chmsg}}
+              <span></span>
+              {{#each alerts}}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{msg}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              {{/each}}
+
+            </div>
+            <div class="addemployee" style="background-color:#fefefe; margin:auto;">
+              <form action="/api/addUser" method="post" class="" id="addEmployee">
+                <table style="width:100%; ">
+                  <tr>
+                    <th style="width:30%;"> </th>
+                    <th> </th>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> User Name: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="text" placeholder="User Name" name="user_name">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Password: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="password" placeholder="Password" name="password">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>
+                      <div class="">
+                        <label for=""> Confirm Password: </label>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="txt_field">
+                        <input type="password" placeholder="Confirm Password" name="cpassword">
+                        <label for=""> </label>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td><span hidden> hiddin</span></td>
+                  </tr>
+
+                  <tr>
+                    <td rowspan="2">
+                      <div class="">
+                        <label for=""> Admin: </label>
+                      </div>
+                    </td>
+
+                  </tr>
+                  <tr>
+                    <td rowspan="2">
+                      <div class="">
+                        <input type="radio" id="html" name="is_admin" value="1">
+                        <label for="yes">yes</label><span></span> <span></span> <span></span> <span></span>
+                        <span></span>
+                        <input type="radio" id="css" name="is_admin" value="0">
+                        <label for="no">no</label><br>
+                      </div>
+                    </td>
+
+                  </tr>
+
+                  <tr>
+                    <td>...</td>
+                    <td>...</td>
+                  </tr>
+                  <tr>
+                    <div class="signup_link">
+                    Already registered as user? <a href="/api/loginPage">Login</a>
+                  </div>
+                  </tr>
+                  <tr>
+                    <td colspan="2" class="btns">
+                      <input type="reset" class="btn btn-secondary" value="Reset" id="">
+                      <input type="submit" value="Add User" class="btn btn-secondary" id="">
+                      <span></span>
+                    </td>
+                  </tr>
+
+                </table>
+              </form>
+              <br>
+              <br>
+
+            </div>
+          </div>
+
+
+
+        </div>
+        {{!-- Contents End --}}
+      </div>
+    </div>
+  </div>
+  {{>footer}}
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajaxy/1.6.1/scripts/jquery.ajaxy.min.js"
+    integrity="sha512-bztGAvCE/3+a1Oh0gUro7BHukf6v7zpzrAb3ReWAVrt+bVNNphcl2tDTKCBr5zk7iEDmQ2Bv401fX3jeVXGIcA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
+    integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"
+    integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+</body>
+<script> /*
+$(document).ready(function() {
+$('#submitsearchemployees').click(function(event) {
+    // alert(dataString); return false;    
+    //event.preventDefault();
+    $.ajax({
+      global: false,      
+      type: "POST",
+      url: "/api/selectEmployee",
+      dataType: 'html',
+      data: {
+            name: $("#f_name").val(),
+        },
+      success: function (result) {
+        console.log(result);
+      },
+          error: function (request, status, error) {
+            serviceError();
+          }
+    });
+return true;
+  });
+
+
+});
+
+*/
+</script>
+
+</html>

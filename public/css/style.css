@@ -1,0 +1,470 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@1,700&family=Oswald&display=swap');
+
+
+/* index.html Design */
+.contain>div {
+    background-color: #eee;
+}
+
+.contain>div:nth-child(odd) {
+    background: #ddd;
+    text-align: center;
+}
+
+.container-fluid {
+    padding: 1em;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 280px 79%;
+    padding-left: 1em;
+}
+
+.leftybar {
+    padding: .5em;
+}
+
+.righty {
+    background-color: #ddd;
+    padding-top: 0em;
+    padding-left: .5em;
+}
+
+/* miantop.hbs desing */
+.maint {
+    background-color: #161010;
+    padding-left: 1em;
+}
+
+/* Forms Design */
+/* add New Employee */
+/* ------------------------------------------------------------------------------------------ */
+.contents {
+    font-family: "Helvetica", sans-serif;
+    background-color: #f2f2f2;
+    font-weight: 400;
+    font-size: medium;
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+
+.formtitle h2 {
+    padding: 20px 20px 0px 20px;
+    text-align: center;
+    border-bottom: 1px solid silver;
+    font-family: 'Oswald', sans-serif;
+    text-align: left;
+}
+
+.formsubtitle {
+    border-bottom: 1px solid silver;
+    font-family: 'Oswald', sans-serif;
+    text-align: left;
+    padding: 20px 20px 0px 20px;
+
+
+}
+
+.formhead {
+    padding: 0 20px;
+    box-sizing: border-box;
+
+}
+
+.mainform {
+    background-color: #F4F9F8;
+}
+
+.addemployee {
+    padding: 0 40px;
+    box-sizing: border-box;
+    width: 60%;
+}
+
+.addemployee label {
+    font-family: 'Lora', serif;
+}
+
+form .txt_field {
+    position: relative;
+    border-bottom: 2px solid #adadad;
+    margin: 5px 0;
+}
+
+.txt_field input {
+    width: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    padding: 0 5px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background: none;
+}
+
+.txt_field label {
+    font-size: 16px;
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    color: #adadad;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+::placeholder {
+    color: rgb(94, 87, 87);
+    opacity: 0.3;
+    /* Firefox */
+    font-weight: 600;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.mainform input[type="text"]:hover {
+    font-size: 16.5px;
+}
+
+form .txt_field:hover {
+    border-color: #2961d9;
+
+}
+
+.mainform .btns {
+    text-align: center;
+}
+
+.mainform input[type="reset"],
+.mainform input[type="submit"] {
+    background: linear-gradient(to bottom right, #7c7bcf, #aeadb9);
+    border: 0;
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 2.5;
+    outline: transparent;
+    padding: 0 3rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+}
+
+.mainform input[type="reset"]:hover,
+.mainform input[type="submit"]:hover {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.mainform input[type="reset"]:focus,
+.mainform input[type="submit"]:focus {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+/* drop down list desing */
+.ddlist select {
+    font-size: 14px;
+    padding: 5px 45px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    position: relative;
+    height: 32px;
+}
+
+/* messages formattng */
+.contents text {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    padding: 20px 20px 0px 20px;
+
+
+
+}
+
+/* ----------------------------------------------------------------------------------- */
+/* End of Form Design  */
+
+/* employee main page styling  */
+.mainContents{
+    padding:10px; 
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr 2fr;
+}
+
+.actionmenu {
+    /* border: 1px solid #2961d9; */
+    font-family: 'Lora', sans-serif;
+
+}
+.searchform {
+    padding: 10px 20px;
+    border: 1px solid #adadad;
+    border-radius: 20px;
+    background-color: #fff; 
+}
+.newemp,
+.searchemp,
+.delemp {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    height: auto;
+    border: 1px solid #adadad;
+    border-radius: 20px;
+    text-align: center;
+    background-color:#FAF9F6;
+} 
+.searchemp, .delemp{
+    margin-top: 1rem;
+    height: 10rem;
+}
+
+.contents .btn {
+    margin-top: 10px;
+    background: linear-gradient(to bottom right, #7c7bcf, #aeadb9);
+    border: 0;
+    border-radius: 12px;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 2.5;
+    outline: transparent;
+    padding: 0 2rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+}
+
+.contents .btn:hover {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.contents .btn:focus {
+    box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(239, 71, 101, 0.5), .125rem .125rem 1rem rgba(255, 154, 90, 0.5);
+}
+
+.viewcontents {
+    text-align: center;
+    padding: 0 20px;
+    padding-bottom: 4rem;
+}
+.viewcontents tbody{
+    background: #fff;
+}
+
+footer{
+    height: 200px;
+    padding: 50px;
+    border-radius: 5px;
+    background-color: darkgrey;
+    text-align: center;
+}
+
+/* add new user form style */
+#userdata{
+    padding: 0 40px;
+    box-sizing: border-box;
+    font-family: 'Lora', serif;
+
+    border-bottom: 2px solid #adadad;
+    margin: 5px 0;
+
+}
+#userdata input {
+    width: 80%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    padding: 0 5px;
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid silver;
+    outline: none;
+    background: none;
+}
+#userdata label {
+    font-size: 16px;
+    /* position: absolute; */
+    color: #adadad;
+    pointer-events: none;
+}
+/* sales form design  */
+.forms{
+    padding: 20px 0px;
+}
+.forms select {
+    margin-left: 20px;
+    padding: 0px 40px;
+}
+.sf {
+    padding-bottom: 20px;
+}
+.sf select {
+    margin-left: 24px;
+}
+
+
+/* .rform .txt_f {
+    position: relative;
+    /* border-bottom: 2px solid #adadad; */
+    /* margin: 5px 0;
+}
+*/ 
+.rform input {
+    /* width: 100%; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+    padding: 0 5px;
+    height: 30px;
+    border: none;
+    outline: none;
+    background: none;
+} 
+
+.rform label {
+    font-size: 16px;
+    /* position: absolute; */
+    /* top: 50%;
+    left: 5px; */
+    color: #adadad;
+    /* transform: translateY(-50%); */
+    pointer-events: none;
+    font-style: italic;
+}
+.rform td {
+    padding-left: 20px;
+}
+.rform th{
+    font-style: italic;
+}
+
+/* Newpurchase page styleing */
+.grid-button {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 5px;
+    border-radius: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+  }
+  .grid-item {
+    padding: 20px;
+    text-align: center;
+    background-color: white;
+    border-radius: 10px;
+
+
+  }
+  .grid-item > input {
+      display:inline-block;
+      width: 100%;
+  }
+  .list{
+    width: 200px;
+  }
+  .purchase_ddlist .companyy{
+    width: 200px;
+  }
+/* login page styling */
+
+.signup_link{
+  margin: 10px 0;
+  text-align: center;
+  font-size: 16px;
+  color: #666666;
+}
+.signup_link a{
+  color: #2691d9;
+  text-decoration: none;
+}
+.signup_link a:hover{
+  text-decoration: underline;
+}
+
+/* Logs Reports design */
+
+.log{ margin:0;}
+#van {
+  margin:0 auto;
+  width:100%;
+  height:auto;
+  display:inline-block;
+  background:#2691d9;
+}
+
+#van ul {
+  margin:0;padding:0;
+  list-style-type:none;
+  /* float:left; */
+  display:inline-block;
+}
+
+#van ul li {
+  position:relative;
+  margin:0 20px 0 0;
+  /* float:left; */
+  display:inline-block;
+}
+
+li > a:after { content: ' »'; }           
+
+li > a:only-child:after { content: ''; }
+
+#van ul li a {
+  padding:20px;
+  display:inline-block;
+  color:white;
+  text-decoration:none;
+}
+
+#van ul li a :hover {
+  opacity:0.5;
+}
+#van ul li ul {
+  display:none;
+  position:absolute;
+  left:0;
+  float:left;
+}
+#van ul li ul li {
+  width:100%;
+  border-bottom:1px solid rgba(255,255,255,.3);
+}
+#van ul li:hover ul {
+  display:block;
+}
+#inp, #inp2, #inp3, #inp4 {
+    border-radius: 0px;
+    background-color: #2691d9;
+
+}
+.flex-cont{
+    display: flex;
+    flex-direction: row;
+    /* width:35%;  */
+    text-align:center; 
+    border: 1px solid #adadad; 
+    padding:10px ;
+    justify-content:space-around;
+}
+.flex-i {
+    width: 35%;
+}
+
+input.dtsp-search::placeholder {
+    opacity: 1;
+
+}

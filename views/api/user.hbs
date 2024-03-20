@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  {{!--
+  <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+
+  <!-- Bootstrap CSS -->
+
+  <title>Mobile Cridet Sales Mgt System</title>
+
+  <link rel="stylesheet" href="../static/js/script.js">
+  <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/sidebar.css">
+  <link rel="stylesheet" type="text/css" href="../static/css/style.css">
+
+  <link rel="stylesheet" href="../static/js/fontawesome.js">
+  <script src="../static/js/solic.js"></script>
+
+
+</head>
+
+<body>
+  {{!-- {{>navbar}} --}}
+  {{!-- {{>sidebar}} --}}
+  <div class="contain">
+    <div class="container-fluid">
+      {{>banner}}
+    </div> {{!-- end of container-fluid --}}
+    <div class="main">
+      <div class="leftybar">
+        {{>sidebar}}
+      </div>{{!-- end of leftybar --}}
+      <div class="righty">
+        <div class="maintop">
+          {{>maintop}}
+        </div>
+        <h1>Users</h1>
+        <div class="contents">
+          <div class="mainContents">
+            <div class="actionmenu">
+              <div class="newemp">
+                To add new User Click Button
+                <button onclick="window.location.href='../api/newUser';" class="btn">
+                  Add New User
+                </button>
+              </div>
+
+
+
+              <div class="searchemp" style="height:155px ;">
+                Enter User Name to Search and Update
+                <form action="/api/searchUser" method="post">
+                  <input type="search" placeholder="search" name="user_id">
+                  <input type="submit" value="Search" class="btn">
+                </form>
+              </div>
+              <div class="delemp">
+                Enter User Name to Delete
+                <form action="/api/delUser" method="post">
+                  <input type="search" placeholder="Enter user name to Delete" name="user_name">
+                  <input type="submit" value="Show Data" class="btn">
+                </form>
+              </div>
+            </div>{{!-- end action menu --}}
+            <div class="searchform" style="background-color:azure ;">
+              {{#msg}}<div class="alert alert-success" role="alert"> user Added </div>
+              {{/msg}}
+              {{#found_msg}}
+              <div class="alert alert-success" role="alert">user data found</div>
+              {{/found_msg}}
+
+              {{#notfound_msg}}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                no such user found, check spelling or search by User ID
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              {{/notfound_msg}}
+              {{#user_data_found_msg}}
+              <div class="alert alert-success">
+                User data found
+              </div>
+              {{/user_data_found_msg}}
+              {{#deletmsg}}
+              <div class="alert alert-danger">
+                User data deleted
+              </div> {{/deletmsg}}
+              {{#updatemsg}}
+              <div class="alert alert-success">
+                User data updated successfully
+              </div>
+              {{/updatemsg}}
+              <div class="">
+                {{!-- search form for updating data --}}
+                {{#found_data}}
+
+                <form action="/api/updateUserData" method="post" id="">
+                  <table style="width:100%; ">
+                    <tr>
+                      <th style="width:30%;"> </th>
+                      <th> </th>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> User ID: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" name="user_id" value="{{user_id}}">
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> User Name: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="User Name" name="user_name" value="{{user_name}}">
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                    <tr>
+                      <td></td>
+                      <td><span hidden> hiddin</span></td>
+                    </tr>
+
+                    <tr>
+                      <td rowspan="2">
+                        <div class="">
+                          <label for=""> Admin: </label>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td rowspan="2">
+                        <div class="">
+                          <input type="radio" id="html" name="is_admin" value="1">
+                          <label for="yes">yes</label><span></span> <span></span> <span></span> <span></span>
+                          <span></span>
+                          <input type="radio" id="css" name="is_admin" value="0">
+                          <label for="no">no</label><br>
+                        </div>
+                      </td>
+
+                    </tr>
+
+                    <tr>
+                      <td>...</td>
+                      <td>...</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="btns" style="text-align:right">
+                        <input type="reset" class="btn btn-secondary" value="Reset" id="" hidden>
+                        <input type="submit" value="Update User" class="btn btn-secondary" id="">
+                        <span></span>
+                      </td>
+                    </tr>
+
+                  </table>
+                </form>
+                {{/found_data}}
+              </div>
+              <div class="">
+                {{!-- search form for Deleting data --}}
+                {{#user_data_found}}
+                <form action="/api/deleteUserData" method="post" id="">
+                  <table style="width:100%; ">
+                    <tr>
+                      <th style="width:30%;"> </th>
+                      <th> </th>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> User ID: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" name="user_id" value="{{user_id}}">
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <div class="">
+                          <label for=""> User Name: </label>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="txt_field">
+                          <input type="text" placeholder="User Name" name="user_name" value="{{user_name}}">
+                          <label for=""> </label>
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td></td>
+                      <td><span hidden> hiddin</span></td>
+                    </tr>
+
+                    <tr>
+                      <td rowspan="2">
+                        <div class="">
+                          <label for=""> Admin: </label>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr>
+                      <td rowspan="2">
+                        <div class="">
+                          <input type="radio" id="html" name="is_admin" value="1">
+                          <label for="yes">yes</label><span></span> <span></span> <span></span> <span></span>
+                          <span></span>
+                          <input type="radio" id="css" name="is_admin" value="0">
+                          <label for="no">no</label><br>
+                        </div>
+                      </td>
+
+                    </tr>
+
+                    <tr>
+                      <td>...</td>
+                      <td>...</td>
+                    </tr>
+                    <tr>
+                      <td colspan="2" class="" style="text-align:right">
+                        <input type="reset" class="btn-danger" value="Reset" id="" hidden>
+                        <input type="submit" value="Delete User" class="btn-danger btn" id="">
+                        <span></span>
+                      </td>
+                    </tr>
+
+                  </table>
+                </form>
+                {{/user_data_found}}
+              </div>
+              <div>
+                {{!-- <p> andy new data here </p> --}}
+
+                </form>
+              </div>
+            </div>
+          </div>{{!-- End mianContents --}}
+        </div>{{!-- end of contents --}}
+        {{!-- mian contants for this page ends here --}}
+        <br>
+        <div class="viewcontents">
+          <form action="/api/showAllUsers" class="">
+            <input type="submit" class="btn btn-secondary btn-show" value="Show All Records">
+            <div style="text-align:right ;">
+              <input type="button" onclick="export_data()" value="Export xlsx">
+            </div>
+            <table class="table table-striped table-hover" id="expData">
+              <thead>
+                <tr>
+                  <th scope="col">User ID </th>
+                  <th scope="col">User Name </th>
+                  <th scope="col">Is Admin</th>
+                  <th scope="col">Last Login</th>
+                  <th scope="col">Registration Date</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                {{#allUserdata}}
+                <tr>
+
+                  <td>{{user_id}}</td>
+                  <td>{{user_name}}</td>
+                  <td>{{is_admin}}</td>
+                  <td>{{last_login}}</td>
+                  <td>{{user_reg_date}}</td>
+                </tr> {{/allUserdata}}
+              </tbody>
+            </table>
+          </form>
+        </div> {{!-- End of viewcontents --}}
+      </div>{{!-- end of righty --}}
+    </div> {{!-- end of main --}}
+  </div> {{!-- end of contain --}}
+    {{>footer}}
+
+  <script src="../static/js/bootstrap.bundle.min.js"></script>
+  <!-- Optional JavaScript; choose one of the two! -->
+  <script src="jquery-3.3.1.slim.min.js"></script>
+  <!-- Option 1: Bootstrap Bundle with Popper -->
+  <script src="../static/js/jquery-3.3.1.slim.min.js"></script>
+  <script src="../static/js/bootstrap.min.js"></script>
+  <script src="../static/js/popper.min.js"></script>
+  <script src="../static/js/solic.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <script>
+    //$(document).ready(function () {
+    // document.getElementById("rrr").onclick = function () { fun() };
+
+    function export_data() {
+      let data = document.getElementById('expData');
+      var fp = XLSX.utils.table_to_book(data, ['MySheets']);
+      XLSX.write(fp, {
+        bookType: 'xlsx',
+        type: 'base64'
+      });
+      let d = new Date(Date.now())
+      let D = 'Users_List_' + d.getFullYear() + '_' + d.getMonth() + '_' + d.getDate()
+      XLSX.writeFile(fp, D + '.xlsx')
+    }
+  //  }
+
+
+
+  </script>
+</body>
+
+</html>
